@@ -12,8 +12,8 @@ public class PollMaster : MonoBehaviour {
 	private int[] m_voteCounts;
 	private List<string> m_voters;
 
-	private bool m_isPolling;
-	private float m_pollTimer;
+	public bool m_isPolling { get; private set; }
+	public float m_pollTimer { get; private set; }
 
 	void Awake () {
 		singleton = this;
@@ -28,13 +28,9 @@ public class PollMaster : MonoBehaviour {
 	void Update () {
 		if (m_isPolling) {
 			m_pollTimer -= Time.deltaTime;
-			if (m_pollTimer < 0) {
-				m_isPolling = false;
-
-				Debug.Log ("Poll has ended");
-				for (int i = 0; i < m_options.Count; i++) {
-					Debug.Log (m_options [i] + ": " + m_voteCounts [i]);
-				}
+			if (m_pollTimer <= 0) {
+				UIManager.singleton.StopVote ();
+				StopVote ();
 			}
 		}
 	}
@@ -68,5 +64,16 @@ public class PollMaster : MonoBehaviour {
 		m_pollTimer = m_pollLength;
 
 		Debug.Log ("Vote started");
+	}
+	public void StopVote(){
+		m_pollTimer = 0;
+		m_isPolling = false;
+		LogResults ();
+
+	}
+	public void LogResults(){
+		for (int i = 0; i < m_options.Count; i++) {
+			Debug.Log (m_options [i] + ": " + m_voteCounts [i]);
+		}
 	}
 }
