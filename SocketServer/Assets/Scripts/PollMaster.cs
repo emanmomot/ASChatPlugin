@@ -41,14 +41,15 @@ public class PollMaster : MonoBehaviour {
 			// dont vote twice
 			//if (!m_voters.Contains (message.username)) {
 				// trim text
-				string voteText = message.text.Trim ();
-				for (int i = 0; i < m_options.Count; i++) {
-					if (voteText.Contains (m_options[i])) {
-						m_voters.Add (message.username);
-						m_voteCounts [i]++;
-						Debug.Log ("Vote for " + m_options [i] + ", current total: " + m_voteCounts[i]);
-					}
+			string voteText = message.text.Trim ();
+			for (int i = 0; i < m_options.Count; i++) {
+				if (voteText.Contains (m_options[i])) {
+					m_voters.Add (message.username);
+					m_voteCounts [i]++;
+					Debug.Log ("Vote for " + m_options [i] + ", current total: " + m_voteCounts[i]);
+					break;
 				}
+			}
 			//}
 		} else {
 			Debug.Log (message.username + ": " + message.text);

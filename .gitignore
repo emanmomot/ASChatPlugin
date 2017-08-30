@@ -10,7 +10,7 @@ SocketServer/[Ll]ibrary/
 SocketServer/sysinfo.txt
 SocketServer/blender.crash.txt
 SocketServer/Assembly*
-SocketServer/Library/**
+/SocketServer/Library/**
 SocketServer/Library/*/*
 SocketServer/Library/*/*/*
 .vs
