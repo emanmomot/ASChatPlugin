@@ -60,8 +60,6 @@ public class WSServer : MonoBehaviour {
 			return;
 		}
 
-		System.Threading.Thread.Sleep(700);
-
 		// poll to see if still connected
 		if (recMsgTimer > recMsgTimeout) {
 			recMsgTimer = 0;
