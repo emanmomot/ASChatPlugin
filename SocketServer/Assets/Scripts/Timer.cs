@@ -33,27 +33,12 @@ public class Timer : MonoBehaviour {
 	void StartTimer () {
 		initTime = int.Parse (inputField.text);
 		time = initTime;
-		inputField.enabled = false;
 
-		foreach (OptionScript option in OptionScript.optionList) {
-			option.mainInputField.enabled = false;
-		}
-
-		AddOption.singleton.gameObject.SetActive (false);
-		PollHeader.singleton.inputField.enabled = false;
-		PollMaster.singleton.StartVote ();
+		UIManager.singleton.EnterPollingState ();
 	}
 
 	void StopTimer() {
-		inputField.enabled = true;
-
-		foreach (OptionScript option in OptionScript.optionList) {
-			option.mainInputField.enabled = true;
-		}
-
-		AddOption.singleton.gameObject.SetActive (true);
-		PollHeader.singleton.inputField.enabled = true;
-		PollMaster.singleton.StopVote ();
+		UIManager.singleton.EnterResultsState ();
 	}
 
 	void Update () {
@@ -85,9 +70,18 @@ public class Timer : MonoBehaviour {
 		return initTime;
 	}
 
+	public void ResetTimer() {
+		SetTimerLength (15);
+		fillImg.fillAmount = 1;
+	}
+
 	private void OnTimerValueChanged () {
 		if (time <= 0) {
 			initTime = int.Parse (inputField.text);
 		}
+	}
+
+	public bool IsRunning() {
+		return time > 0;
 	}
 }

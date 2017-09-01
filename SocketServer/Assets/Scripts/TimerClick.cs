@@ -20,6 +20,9 @@ public class TimerClick : MonoBehaviour, IPointerClickHandler {
 	}
 	public void OnPointerClick(PointerEventData eventData)
 	{
+		if (Timer.singleton.IsRunning ()) {
+			return;
+		}
 
 		if (eventData.button == PointerEventData.InputButton.Right) {
 			if (timerScript.GetTimerLength() < 60) {
