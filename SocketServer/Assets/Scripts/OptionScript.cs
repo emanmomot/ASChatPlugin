@@ -35,6 +35,11 @@ public class OptionScript : MonoBehaviour {
 		percentageText.text = ((int)(percentage * 100)).ToString()+ "%";
 	}
 
+	public void LockInOption() {
+		mainInputField.text = mainInputField.text.Trim ();
+		mainInputField.enabled = false;
+	}
+
 	public void SetColor(Color color) {
 		barImage.color = color;
 		percentageText.color = color;

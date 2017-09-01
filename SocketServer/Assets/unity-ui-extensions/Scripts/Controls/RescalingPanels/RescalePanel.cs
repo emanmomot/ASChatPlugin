@@ -44,7 +44,7 @@ namespace UnityEngine.UI.Extensions
             RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, data.position, data.pressEventCamera, out currentPointerPosition);
             Vector2 resizeValue = currentPointerPosition - previousPointerPosition;
 
-            scaleDelta += new Vector3(-resizeValue.y * 0.005f, -resizeValue.y * 0.005f, 0f);
+			scaleDelta += new Vector3(-Mathf.Sign(resizeValue.y) * resizeValue.magnitude * 0.005f, -Mathf.Sign(resizeValue.y) * resizeValue.magnitude * 0.005f, 0f);
             scaleDelta = new Vector3(
                 Mathf.Clamp(scaleDelta.x, minSize.x, maxSize.x),
                 Mathf.Clamp(scaleDelta.y, minSize.y, maxSize.y),

@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour {
 		Timer.singleton.inputField.enabled = false;
 
 		foreach (OptionScript option in OptionScript.optionList) {
-			option.mainInputField.enabled = false;
+			option.LockInOption ();
 		}
 
 		AddRemoveOption.singleton.gameObject.SetActive (false);

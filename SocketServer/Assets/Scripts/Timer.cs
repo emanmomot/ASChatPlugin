@@ -31,7 +31,11 @@ public class Timer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void StartTimer () {
-		initTime = int.Parse (inputField.text);
+		if (!int.TryParse (inputField.text, out initTime)) {
+			inputField.text = "15";
+			initTime = 15;
+		}
+
 		time = initTime;
 
 		UIManager.singleton.EnterPollingState ();
@@ -76,8 +80,11 @@ public class Timer : MonoBehaviour {
 	}
 
 	private void OnTimerValueChanged () {
+		
 		if (time <= 0) {
-			initTime = int.Parse (inputField.text);
+			if (!int.TryParse (inputField.text, out initTime)) {
+				initTime = 0;
+			}
 		}
 	}
 
