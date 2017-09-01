@@ -22,7 +22,7 @@ namespace UnityEngine.UI.Extensions
         void Awake()
         {
             rectTransform = transform.parent.GetComponent<RectTransform>();
-            goTransform = transform.parent;
+			goTransform = transform.parent.parent;
 
             thisRectTransform = GetComponent<RectTransform>();
             sizeDelta = thisRectTransform.sizeDelta;
@@ -30,7 +30,7 @@ namespace UnityEngine.UI.Extensions
 
         public void OnPointerDown(PointerEventData data)
         {
-            rectTransform.SetAsLastSibling();
+            //rectTransform.SetAsLastSibling();
             RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, data.position, data.pressEventCamera, out previousPointerPosition);
         }
 
@@ -56,7 +56,7 @@ namespace UnityEngine.UI.Extensions
             previousPointerPosition = currentPointerPosition;
             float resizeDeltaValue = sizeDelta.x / goTransform.localScale.x;
             Vector2 newSizeDelta = new Vector2(resizeDeltaValue, resizeDeltaValue);
-            thisRectTransform.sizeDelta = newSizeDelta;
+            //thisRectTransform.sizeDelta = newSizeDelta;
         }
     }
 }
