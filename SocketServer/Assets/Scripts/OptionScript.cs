@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class OptionScript : MonoBehaviour {
 
@@ -22,6 +23,8 @@ public class OptionScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		optionList.Add (this);
+		EventSystem.current.SetSelectedGameObject (mainInputField.gameObject);
+		mainInputField.OnPointerClick (new PointerEventData (EventSystem.current));
 	}
 	
 	// Update is called once per frame
@@ -38,6 +41,10 @@ public class OptionScript : MonoBehaviour {
 	public void LockInOption() {
 		mainInputField.text = mainInputField.text.Trim ();
 		mainInputField.enabled = false;
+	}
+
+	public void UnlockOption() {
+		mainInputField.enabled = true;
 	}
 
 	public void SetColor(Color color) {

@@ -39,6 +39,8 @@ public class PollMaster : MonoBehaviour {
 					m_voteCounts [i]++;
 					m_totalVotes++;
 
+					VoteBannerController.singleton.ShowNewBanner (message.username, OptionScript.optionList [i].GetKey ());
+
 					for (int j = 0; j < OptionScript.optionList.Count; j++) {
 						OptionScript.optionList [j].SetBarPercentage (((float)m_voteCounts [j]) / m_totalVotes);
 					}
