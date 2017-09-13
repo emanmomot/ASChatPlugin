@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11a4011a4e91744e8e5a383ae8bd2d8, type: 3}
+  m_Name: GradientCyan_16
+  m_EditorClassIdentifier: 
+  palette:
+  - serializedVersion: 2
+    rgba: 4278190080
+  - serializedVersion: 2
+    rgba: 4279308544
+  - serializedVersion: 2
+    rgba: 4280427008
+  - serializedVersion: 2
+    rgba: 4281545472
+  - serializedVersion: 2
+    rgba: 4282663936
+  - serializedVersion: 2
+    rgba: 4283782400
+  - serializedVersion: 2
+    rgba: 4284900864
+  - serializedVersion: 2
+    rgba: 4286019328
+  - serializedVersion: 2
+    rgba: 4287137792
+  - serializedVersion: 2
+    rgba: 4288256256
+  - serializedVersion: 2
+    rgba: 4289374720
+  - serializedVersion: 2
+    rgba: 4290493184
+  - serializedVersion: 2
+    rgba: 4291611648
+  - serializedVersion: 2
+    rgba: 4292730112
+  - serializedVersion: 2
+    rgba: 4293848576
+  - serializedVersion: 2
+    rgba: 4294967040
