@@ -115,7 +115,7 @@ public class WSServer : MonoBehaviour {
 			foreach (string msg in newMessages) {
 				try {
 					Message message = JsonToMessage (msg);
-					PollMaster.singleton.RecieveMessage (message);
+					MessageReciever.singleton.RecieveMessage (message);
 				} catch (ArgumentException) {
 					Debug.LogError ("Something Not JSON Sent");
 				}

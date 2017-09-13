@@ -14,7 +14,24 @@ var observer = new MutationObserver(function(mutations) {
 		var rootMsg = mutation.target.childNodes[mutation.target.childNodes.length-1-i];
 		var timestamp = rootMsg.firstChild.firstChild.innerHTML;
 		var username = rootMsg.lastChild.firstChild.innerHTML;
-		var message = rootMsg.lastChild.lastChild.innerText;
+
+		//var message = rootMsg.lastChild.lastChild.innerText;
+		var msgBodyNode = rootMsg.lastChild.lastChild;
+		var message = '';
+		for(var j = 0; j < msgBodyNode.childNodes.length; j++) {
+			var node = msgBodyNode.childNodes[j];
+			if(node.nodeName == '#comment') {
+				continue;
+			} else if(node.nodeName == '#text') {
+				message += node.wholeText;
+			} else if(node.nodeName == 'SPAN' && node.childNodes[0].nodeName == 'IMG') {
+				message += node.childNodes[0].alt;
+			} else if(node.nodeName == 'A') {
+				message += node.innerText;
+			}
+		}
+
+		console.log(message);
 		
 		
 		// ws exists and is OPEN
