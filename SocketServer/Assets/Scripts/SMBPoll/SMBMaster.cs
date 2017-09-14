@@ -13,6 +13,11 @@ namespace SMBPoll {
 			MessageReciever.singleton = this;
 		}
 
+		void Start() {
+			m_voters = new List<string> ();
+			StartVote ();
+		}
+
 		public override void RecieveMessage (Message message) {
 			if (m_isPolling) {
 				if (!m_voters.Contains (message.username)) {
@@ -21,6 +26,7 @@ namespace SMBPoll {
 							m_voters.Add (message.username);
 							m_averageVote = (m_averageVote * (m_voters.Count - 1) + i) / m_voters.Count;
 							UIManager.singleton.DisplayNewAvg (m_averageVote);
+							UIManager.singleton.DisplayNewVoteCount (m_voters.Count);
 							return;
 						}
 					}

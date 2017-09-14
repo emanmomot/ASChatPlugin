@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4552519848301008}
   - component: {fileID: 114352736686175602}
   m_Layer: 0
-  m_Name: DUCK
+  m_Name: COCK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,5 +52,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_value: 0
-  m_tex: {fileID: 21300000, guid: 42af59f5bdb1c453389cf8273c05c8f3, type: 3}
-  m_key: '::DUCK::'
+  m_tex: {fileID: 21300000, guid: 8431694070375428eb2fd47e2575126b, type: 3}
+  m_key: '::COCK::'

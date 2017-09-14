@@ -14,6 +14,8 @@ namespace SMBPoll {
 		public RectTransform m_scoreLineLeft;
 		public RectTransform m_scoreLineRight;
 
+		public Text m_voteCount;
+
 		private float m_scoreLineLength;
 		private RectTransform m_avgVoteTransform;
 
@@ -21,7 +23,7 @@ namespace SMBPoll {
 			singleton = this;
 		}
 
-		float avg;
+		//float avg;
 		// Use this for initialization
 		void Start () {
 			m_avgVoteTransform = m_avgVote.transform as RectTransform;
@@ -31,11 +33,11 @@ namespace SMBPoll {
 
 		// Update is called once per frame
 		void Update () {
-			avg += .01f;
-			if (avg > 8) {
-				avg = 0;
-			}
-			DisplayNewAvg (avg);
+			//avg += .01f;
+			//if (avg > 8) {
+			//		avg = 0;
+			//}
+			//DisplayNewAvg (avg);
 		}
 
 		public void DisplayNewAvg(float avg) {
@@ -43,6 +45,10 @@ namespace SMBPoll {
 			m_avgVoteTransform.anchoredPosition = m_scoreLineLeft.anchoredPosition + offset;
 
 			m_avgVote.sprite = m_emojis [Mathf.FloorToInt (avg)].m_tex;
+		}
+
+		public void DisplayNewVoteCount(int count) {
+			m_voteCount.text = count.ToString();
 		}
 
 		public void StartVote() {

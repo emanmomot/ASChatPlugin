@@ -52,5 +52,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_value: 0
-  m_tex: {fileID: 21300000, guid: cc0975e6eeb37408cbc8c8232472281b, type: 3}
+  m_tex: {fileID: 21300000, guid: 222288f5ab8e14bf3820048f9deb38bf, type: 3}
   m_key: '::CUKE::'
