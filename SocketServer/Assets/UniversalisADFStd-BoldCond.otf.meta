@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 0a85ca9d7298646bf82f9c13ea3d7f57
+timeCreated: 1505334869
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Universalis ADF Std
+  fontNames:
+  - Universalis ADF Std
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

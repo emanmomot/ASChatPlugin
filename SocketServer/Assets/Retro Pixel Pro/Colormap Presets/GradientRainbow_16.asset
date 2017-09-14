@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11a4011a4e91744e8e5a383ae8bd2d8, type: 3}
+  m_Name: GradientRainbow_16
+  m_EditorClassIdentifier: 
+  palette:
+  - serializedVersion: 2
+    rgba: 4278190335
+  - serializedVersion: 2
+    rgba: 4278209791
+  - serializedVersion: 2
+    rgba: 4278229503
+  - serializedVersion: 2
+    rgba: 4278248959
+  - serializedVersion: 2
+    rgba: 4278255563
+  - serializedVersion: 2
+    rgba: 4278255487
+  - serializedVersion: 2
+    rgba: 4278255410
+  - serializedVersion: 2
+    rgba: 4279893760
+  - serializedVersion: 2
+    rgba: 4284940032
+  - serializedVersion: 2
+    rgba: 4289920768
+  - serializedVersion: 2
+    rgba: 4294967040
+  - serializedVersion: 2
+    rgba: 4294947328
+  - serializedVersion: 2
+    rgba: 4294927616
+  - serializedVersion: 2
+    rgba: 4294908160
+  - serializedVersion: 2
+    rgba: 4294901810
+  - serializedVersion: 2
+    rgba: 4294901887
