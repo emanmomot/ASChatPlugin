@@ -33,11 +33,6 @@ namespace SMBPoll {
 
 		// Update is called once per frame
 		void Update () {
-			//avg += .01f;
-			//if (avg > 8) {
-			//		avg = 0;
-			//}
-			//DisplayNewAvg (avg);
 		}
 
 		public void DisplayNewAvg(float avg) {
