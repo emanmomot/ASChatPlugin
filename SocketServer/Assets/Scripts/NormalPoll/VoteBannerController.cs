@@ -17,11 +17,11 @@ public class VoteBannerController : MonoBehaviour {
 
 	void Awake() {
 		singleton = this;
+		m_banners = new List<RectTransform> ();
 	}
 
 	// Use this for initialization
 	void Start () {
-		m_banners = new List<RectTransform> ();
 	}
 	
 	// Update is called once per frame

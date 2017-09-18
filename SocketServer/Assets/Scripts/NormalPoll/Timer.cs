@@ -30,7 +30,7 @@ public class Timer : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void StartTimer () {
+	public void StartTimer () {
 		if (!int.TryParse (inputField.text, out initTime)) {
 			inputField.text = "15";
 			initTime = 15;
@@ -46,11 +46,6 @@ public class Timer : MonoBehaviour {
 	}
 
 	void Update () {
-		
-		if (Input.GetKeyDown (KeyCode.Return) && time <= 0) {
-			StartTimer ();
-		}
-
 		if (time > 0) {
 			time -= Time.deltaTime;
 			if (time <= 0) {
@@ -77,6 +72,7 @@ public class Timer : MonoBehaviour {
 	public void ResetTimer() {
 		SetTimerLength (15);
 		fillImg.fillAmount = 1;
+		time = 0;
 	}
 
 	private void OnTimerValueChanged () {
