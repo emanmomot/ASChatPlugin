@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4290739549942468}
   - component: {fileID: 114186300889660722}
   m_Layer: 0
-  m_Name: SALLY
+  m_Name: JONO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,4 +53,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_value: 4
   m_tex: {fileID: 21300000, guid: d3afbc29fa49249b0b784bba3965855c, type: 3}
-  m_key: '::SALLY::'
+  m_key: '::JONO::'

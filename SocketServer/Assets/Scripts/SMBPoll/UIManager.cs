@@ -36,7 +36,7 @@ namespace SMBPoll {
 		}
 
 		public void DisplayNewAvg(float avg) {
-			Vector2 offset = new Vector2 ((avg / (m_emojis.Length-1)) * m_scoreLineLength, 0);
+			Vector2 offset = new Vector2 ((avg / (m_emojis.Length-2)) * m_scoreLineLength, 0);
 			m_avgVoteTransform.anchoredPosition = m_scoreLineLeft.anchoredPosition + offset;
 
 			m_avgVote.sprite = m_emojis [Mathf.FloorToInt (avg)].m_tex;
@@ -48,6 +48,7 @@ namespace SMBPoll {
 
 		public void StartVote() {
 			((SMBMaster)MessageReciever.singleton).StartVote ();
+			DisplayNewVoteCount (0);
 			DisplayNewAvg (0);
 		}
 
