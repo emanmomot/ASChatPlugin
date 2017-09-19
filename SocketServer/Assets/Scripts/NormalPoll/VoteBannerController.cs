@@ -12,8 +12,10 @@ public class VoteBannerController : MonoBehaviour {
 	public GameObject m_showBannersButton;
 	public GameObject m_hideBannersButton;
 
+
 	private List<RectTransform> m_banners;
 	private int m_colorInd;
+
 
 	void Awake() {
 		singleton = this;

@@ -18,10 +18,17 @@ public class UIManager : MonoBehaviour {
 
 	public GameObject m_lockButton;
 	public GameObject m_unlockButton;
+	public GameObject m_instructions;
+	public GameObject m_instructionsButton;
+	public GameObject m_bannerButton;
+	public GameObject m_bannerButtonOff;
+	public GameObject m_connectionText;
+	public GameObject[] m_pollInstructions;
 
 	private PollState m_pollState;
 
 	private bool m_isLocked;
+	bool instructionsOn = false;
 
 	void Awake() {
 		singleton = this;
@@ -85,10 +92,24 @@ public class UIManager : MonoBehaviour {
 			UnlockOptions ();
 			m_lockButton.SetActive (false);
 			m_unlockButton.SetActive (true);
+			m_instructionsButton.SetActive (true);
+			m_connectionText.SetActive (true);
+			m_instructions.SetActive (true);
+
 		} else {
 			LockOptions ();
 			m_lockButton.SetActive (true);
 			m_unlockButton.SetActive (false);
+			m_instructions.SetActive (false);
+			m_bannerButton.SetActive (false);
+			m_bannerButtonOff.SetActive (false);
+			m_instructionsButton.SetActive (false);
+			m_connectionText.SetActive (false);
+			for(int i = 0; i<m_pollInstructions.Length; i++)
+			{
+				m_pollInstructions [i].SetActive (false);
+			}
+			instructionsOn = false;
 		}
 	}
 
@@ -103,6 +124,8 @@ public class UIManager : MonoBehaviour {
 
 		AddRemoveOption.singleton.gameObject.SetActive (false);
 		PollHeader.singleton.inputField.enabled = false;
+
+
 	}
 
 	public void UnlockOptions() {
@@ -114,6 +137,31 @@ public class UIManager : MonoBehaviour {
 
 		foreach (OptionScript option in OptionScript.optionList) {
 			option.UnlockOption ();
+		}
+	}
+	public void ShowInstructions(){
+		if (instructionsOn == false) {
+			iTween.ScaleTo (m_instructions, iTween.Hash (
+				"scale", new Vector3 (0.58f, 0.5f, 0.5f),
+				"time", 0.2f,
+				"easeType", iTween.EaseType.easeOutBack
+			));
+			for(int i = 0; i<m_pollInstructions.Length; i++)
+			{
+				m_pollInstructions [i].SetActive (true);
+			}
+			instructionsOn = true;
+		} else if (instructionsOn == true) {
+			iTween.ScaleTo (m_instructions, iTween.Hash (
+				"scale", new Vector3 (0.0f, 0.5f, 0.5f),
+				"time", 0.2f,
+				"easeType", iTween.EaseType.easeInBack
+			));
+			for(int i = 0; i<m_pollInstructions.Length; i++)
+			{
+				m_pollInstructions [i].SetActive (false);
+			}
+			instructionsOn = false;
 		}
 	}
 }
