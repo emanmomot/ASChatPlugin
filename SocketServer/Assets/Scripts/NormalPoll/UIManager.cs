@@ -1,7 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour {
 
@@ -14,35 +15,39 @@ public class UIManager : MonoBehaviour {
 	public static UIManager singleton;
 
 	public Text m_connectionStatus;
-	public Button m_resetButton;
+
+	public GameObject m_instructions;
 
 	public GameObject m_lockButton;
 	public GameObject m_unlockButton;
-	public GameObject m_instructions;
-	public GameObject m_instructionsButton;
+	public GameObject m_showInstrButton;
+	public GameObject m_hideInstrButton;
 	public GameObject m_bannerButton;
 	public GameObject m_bannerButtonOff;
 	public GameObject m_connectionText;
 	public GameObject[] m_pollInstructions;
+	public Text m_voteCount;
 
-	private PollState m_pollState;
-
-	private bool m_isLocked;
-	bool instructionsOn = false;
 
 	void Awake() {
 		singleton = this;
 	}
 
 	void Start () {
-		m_pollState = PollState.setup;
-		m_resetButton.gameObject.SetActive (false);
+		EnterSetupState ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
 		UpdateConnectionStatus (WSServer.singleton.IsConnected ());
+
+		if (Input.GetKeyUp (KeyCode.R) && !m_lockButton.activeSelf) {
+			EnterSetupState ();
+		} else if (Input.GetKeyDown (KeyCode.Return) && m_lockButton.activeSelf) {
+			LockOptions ();
+		} else if (Input.GetKeyDown (KeyCode.Return) && !m_lockButton.activeSelf) {
+			Timer.singleton.StartTimer ();
+		}
 	}
 		
 	public void UpdateConnectionStatus(bool connected) {
@@ -56,8 +61,9 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void EnterSetupState() {
-		m_resetButton.gameObject.SetActive (false);
-		m_unlockButton.SetActive (true);
+		m_lockButton.SetActive(true);
+
+		VoteBannerController.singleton.m_hideBannersButton.SetActive (true);
 
 		Timer.singleton.ResetTimer ();
 
@@ -73,48 +79,26 @@ public class UIManager : MonoBehaviour {
 
 		PollHeader.singleton.inputField.text = "";
 
+		EventSystem.current.SetSelectedGameObject (Timer.singleton.inputField.gameObject);
+		Timer.singleton.inputField.OnPointerClick (new PointerEventData (EventSystem.current));
+		m_voteCount.text= "votes: 0";
 	}
 
 	public void EnterPollingState() {
 		LockOptions ();
 		m_lockButton.SetActive (false);
-		m_unlockButton.SetActive (false);
 		((PollMaster)MessageReciever.singleton).StartVote ();
 	}
 
 	public void EnterResultsState() {
 		((PollMaster)MessageReciever.singleton).StopVote ();
-		m_resetButton.gameObject.SetActive (true);
-	}
-
-	public void LockButtonClick() {
-		if (m_isLocked) {
-			UnlockOptions ();
-			m_lockButton.SetActive (false);
-			m_unlockButton.SetActive (true);
-			m_instructionsButton.SetActive (true);
-			m_connectionText.SetActive (true);
-			m_instructions.SetActive (true);
-
-		} else {
-			LockOptions ();
-			m_lockButton.SetActive (true);
-			m_unlockButton.SetActive (false);
-			m_instructions.SetActive (false);
-			m_bannerButton.SetActive (false);
-			m_bannerButtonOff.SetActive (false);
-			m_instructionsButton.SetActive (false);
-			m_connectionText.SetActive (false);
-			for(int i = 0; i<m_pollInstructions.Length; i++)
-			{
-				m_pollInstructions [i].SetActive (false);
-			}
-			instructionsOn = false;
+		foreach (OptionScript option in OptionScript.optionList) {
+			option.ActivateRevealPlayerButton ();
 		}
 	}
 
 	public void LockOptions() {
-		m_isLocked = true;
+		m_lockButton.SetActive (false);
 
 		Timer.singleton.inputField.enabled = false;
 
@@ -125,12 +109,18 @@ public class UIManager : MonoBehaviour {
 		AddRemoveOption.singleton.gameObject.SetActive (false);
 		PollHeader.singleton.inputField.enabled = false;
 
+		VoteBannerController.singleton.m_showBannersButton.SetActive (false);
+		VoteBannerController.singleton.m_hideBannersButton.SetActive (false);
 
+		VoteBannerController.singleton.ClearBanners ();
+
+		m_showInstrButton.SetActive (false);
+		m_hideInstrButton.SetActive (false);
+
+		m_instructions.SetActive (false);
 	}
 
 	public void UnlockOptions() {
-		m_isLocked = false;
-
 		AddRemoveOption.singleton.gameObject.SetActive (true);
 		Timer.singleton.inputField.enabled = true;
 		PollHeader.singleton.inputField.enabled = true;
@@ -139,29 +129,34 @@ public class UIManager : MonoBehaviour {
 			option.UnlockOption ();
 		}
 	}
-	public void ShowInstructions(){
-		if (instructionsOn == false) {
-			iTween.ScaleTo (m_instructions, iTween.Hash (
-				"scale", new Vector3 (0.58f, 0.5f, 0.5f),
-				"time", 0.2f,
-				"easeType", iTween.EaseType.easeOutBack
-			));
-			for(int i = 0; i<m_pollInstructions.Length; i++)
-			{
-				m_pollInstructions [i].SetActive (true);
-			}
-			instructionsOn = true;
-		} else if (instructionsOn == true) {
-			iTween.ScaleTo (m_instructions, iTween.Hash (
-				"scale", new Vector3 (0.0f, 0.5f, 0.5f),
-				"time", 0.2f,
-				"easeType", iTween.EaseType.easeInBack
-			));
-			for(int i = 0; i<m_pollInstructions.Length; i++)
-			{
-				m_pollInstructions [i].SetActive (false);
-			}
-			instructionsOn = false;
+
+	public void ShowInstructions() {
+		iTween.ScaleTo (m_instructions, iTween.Hash (
+			"scale", new Vector3 (0.58f, 0.5f, 0.5f),
+			"time", 0.2f,
+			"easeType", iTween.EaseType.easeOutBack
+		));
+		for(int i = 0; i<m_pollInstructions.Length; i++)
+		{
+			m_pollInstructions [i].SetActive (true);
 		}
+
+		m_showInstrButton.SetActive (false);
+		m_hideInstrButton.SetActive (true);
+	}
+
+	public void HideInstructions() {
+		iTween.ScaleTo (m_instructions, iTween.Hash (
+			"scale", new Vector3 (0.0f, 0.5f, 0.5f),
+			"time", 0.2f,
+			"easeType", iTween.EaseType.easeInBack
+		));
+		for(int i = 0; i<m_pollInstructions.Length; i++)
+		{
+			m_pollInstructions [i].SetActive (false);
+		}
+
+		m_showInstrButton.SetActive (true);
+		m_hideInstrButton.SetActive (false);
 	}
 }

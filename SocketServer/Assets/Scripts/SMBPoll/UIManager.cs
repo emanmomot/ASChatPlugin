@@ -17,7 +17,7 @@ namespace SMBPoll {
 		public Text m_voteCount;
 
 		private float m_scoreLineLength;
-		private RectTransform m_avgVoteTransform;
+		public Transform m_avgVoteTransform;
 
 		void Awake() {
 			singleton = this;
@@ -26,7 +26,6 @@ namespace SMBPoll {
 		//float avg;
 		// Use this for initialization
 		void Start () {
-			m_avgVoteTransform = m_avgVote.transform as RectTransform;
 			m_scoreLineLength = m_scoreLineRight.anchoredPosition.x - m_scoreLineLeft.anchoredPosition.x;
 		}
 
@@ -36,9 +35,9 @@ namespace SMBPoll {
 		}
 
 		public void DisplayNewAvg(float avg) {
-			Vector2 offset = new Vector2 ((avg / (m_emojis.Length-1)) * m_scoreLineLength, 0);
-			m_avgVoteTransform.anchoredPosition = m_scoreLineLeft.anchoredPosition + offset;
-
+			//Vector2 offset = new Vector2 ((avg / (m_emojis.Length-2)) * m_scoreLineLength, 0);
+			//m_avgVoteTransform.localScale.x =
+			iTween.ScaleTo(m_avgVoteTransform.gameObject,iTween.Hash("x", avg/9.0f, "easeType", "easeOutCirc","time",1.5f));
 			m_avgVote.sprite = m_emojis [Mathf.FloorToInt (avg)].m_tex;
 		}
 
@@ -48,6 +47,7 @@ namespace SMBPoll {
 
 		public void StartVote() {
 			((SMBMaster)MessageReciever.singleton).StartVote ();
+			DisplayNewVoteCount (0);
 			DisplayNewAvg (0);
 		}
 

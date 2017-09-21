@@ -19,11 +19,15 @@ public class VoteBannerController : MonoBehaviour {
 
 	void Awake() {
 		singleton = this;
+		m_banners = new List<RectTransform> ();
 	}
 
 	// Use this for initialization
 	void Start () {
-		m_banners = new List<RectTransform> ();
+		for (int i = 0; i < m_bannerParent.childCount; i++) {
+			RectTransform t = m_bannerParent.GetChild (i) as RectTransform;
+			m_banners.Add (t);
+		}
 	}
 	
 	// Update is called once per frame

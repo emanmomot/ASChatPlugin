@@ -14,6 +14,10 @@ public class OptionScript : MonoBehaviour {
 	public Image barImage;
 	public InputField mainInputField;
 
+	public string player;
+
+	public Button revealPlayerButton;
+
 	private float maxWidth;
 
 	void Awake() {
@@ -23,8 +27,15 @@ public class OptionScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		optionList.Add (this);
-		EventSystem.current.SetSelectedGameObject (mainInputField.gameObject);
-		mainInputField.OnPointerClick (new PointerEventData (EventSystem.current));
+		if (optionList.Count > 1) {
+			EventSystem.current.SetSelectedGameObject (mainInputField.gameObject);
+			mainInputField.OnPointerClick (new PointerEventData (EventSystem.current));
+		} else {
+			Navigation customNav = new Navigation();
+			customNav.mode = Navigation.Mode.Explicit;
+			customNav.selectOnDown = mainInputField;
+			PollHeader.singleton.inputField.navigation = customNav;
+		}
 	}
 	
 	// Update is called once per frame
@@ -54,5 +65,21 @@ public class OptionScript : MonoBehaviour {
 
 	public string GetKey() {
 		return mainInputField.text;
+	}
+
+	public void ActivateRevealPlayerButton () {
+		revealPlayerButton.gameObject.SetActive (true);
+	}
+
+	public void RevealPlayer() {
+		string voter = ((PollMaster)MessageReciever.singleton).m_firstVoter [optionList.IndexOf (this)];
+		if (string.IsNullOrEmpty (voter)) {
+			voter = "No votes :(";
+		} else {
+			voter = "First vote by " + voter;
+		}
+
+		mainInputField.text = voter;
+		revealPlayerButton.gameObject.SetActive (false);
 	}
 }

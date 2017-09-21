@@ -20,17 +20,18 @@ namespace SMBPoll {
 
 		public override void RecieveMessage (Message message) {
 			if (m_isPolling) {
-				if (!m_voters.Contains (message.username)) {
+				//if (!m_voters.Contains (message.username)) {
 					for (int i = 0; i < UIManager.singleton.m_emojis.Length; i++) {
-						if(message.text.Contains(UIManager.singleton.m_emojis[i].m_key)){
+						Emoji emoji = UIManager.singleton.m_emojis [i];
+						if (message.text.Contains (emoji.m_key)) {
 							m_voters.Add (message.username);
-							m_averageVote = (m_averageVote * (m_voters.Count - 1) + i) / m_voters.Count;
+							m_averageVote = (m_averageVote * (m_voters.Count - 1) + emoji.m_value) / m_voters.Count;
 							UIManager.singleton.DisplayNewAvg (m_averageVote);
 							UIManager.singleton.DisplayNewVoteCount (m_voters.Count);
 							return;
 						}
 					}
-				}
+				//}
 			}
 		}
 
