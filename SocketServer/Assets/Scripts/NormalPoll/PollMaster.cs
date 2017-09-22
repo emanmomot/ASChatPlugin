@@ -37,7 +37,7 @@ public class PollMaster : MessageReciever {
 				// trim text
 				string voteText = message.text.Trim ();
 				for (int i = 0; i < OptionScript.optionList.Count; i++) {
-					if (voteText == OptionScript.optionList [i].GetKey ()) {
+					if (string.Equals(voteText,OptionScript.optionList [i].GetKey (),System.StringComparison.OrdinalIgnoreCase)) {
 						m_voters.Add (message.username);
 						m_voteCounts [i]++;
 						m_totalVotes++;
