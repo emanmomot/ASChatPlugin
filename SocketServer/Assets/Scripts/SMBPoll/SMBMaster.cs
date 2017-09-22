@@ -20,7 +20,7 @@ namespace SMBPoll {
 
 		public override void RecieveMessage (Message message) {
 			if (m_isPolling) {
-				//if (!m_voters.Contains (message.username)) {
+				if (!m_voters.Contains (message.username)) {
 					for (int i = 0; i < UIManager.singleton.m_emojis.Length; i++) {
 						Emoji emoji = UIManager.singleton.m_emojis [i];
 						if (message.text.Contains (emoji.m_key)) {
@@ -31,7 +31,7 @@ namespace SMBPoll {
 							return;
 						}
 					}
-				//}
+				}
 			}
 		}
 

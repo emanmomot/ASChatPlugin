@@ -33,37 +33,37 @@ public class PollMaster : MessageReciever {
 		
 		if (m_isPolling) {
 			// dont vote twice
-			//if (!m_voters.Contains (message.username)) {
+			if (!m_voters.Contains (message.username)) {
 				// trim text
 				string voteText = message.text.Trim ();
 				for (int i = 0; i < OptionScript.optionList.Count; i++) {
-				if (voteText == OptionScript.optionList [i].GetKey ()) {
-					m_voters.Add (message.username);
-					m_voteCounts [i]++;
-					m_totalVotes++;
+					if (voteText == OptionScript.optionList [i].GetKey ()) {
+						m_voters.Add (message.username);
+						m_voteCounts [i]++;
+						m_totalVotes++;
 
-					if (string.IsNullOrEmpty (m_firstVoter [i])) {
-						m_firstVoter [i] = message.username;
-					}
-					VoteBannerController.singleton.ShowNewBanner (message.username, OptionScript.optionList [i].GetKey ());
-					topPercentage = 0;
-					for (int j = 0; j < OptionScript.optionList.Count; j++) {
-						float percentage = ((float)m_voteCounts [j]) / m_totalVotes;
-						if (topPercentage < percentage) {
-							topPercentage = percentage;
+						if (string.IsNullOrEmpty (m_firstVoter [i])) {
+							m_firstVoter [i] = message.username;
 						}
-					}
-					for (int j = 0; j < OptionScript.optionList.Count; j++) {
-						float percentage = ((float)m_voteCounts [j]) / m_totalVotes;
-						OptionScript.optionList [j].SetBarPercentage (percentage);
-					}
+						VoteBannerController.singleton.ShowNewBanner (message.username, OptionScript.optionList [i].GetKey ());
+						topPercentage = 0;
+						for (int j = 0; j < OptionScript.optionList.Count; j++) {
+							float percentage = ((float)m_voteCounts [j]) / m_totalVotes;
+							if (topPercentage < percentage) {
+								topPercentage = percentage;
+							}
+						}
+						for (int j = 0; j < OptionScript.optionList.Count; j++) {
+							float percentage = ((float)m_voteCounts [j]) / m_totalVotes;
+							OptionScript.optionList [j].SetBarPercentage (percentage);
+						}
 
-					UIManager.singleton.m_voteCount.text = "votes: " + m_totalVotes;
+						UIManager.singleton.m_voteCount.text = "votes: " + m_totalVotes;
 
-					Debug.Log ("Vote for " + OptionScript.optionList [i].GetKey () + ", current total: " + m_voteCounts [i]);
-					break;
+						Debug.Log ("Vote for " + OptionScript.optionList [i].GetKey () + ", current total: " + m_voteCounts [i]);
+						break;
+					}
 				}
-				//}
 			}
 		} else {
 			Debug.Log (message.username + ": " + message.text);
