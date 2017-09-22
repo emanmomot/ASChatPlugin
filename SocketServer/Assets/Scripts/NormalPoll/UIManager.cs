@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour {
 			EnterSetupState ();
 		} else if (Input.GetKeyDown (KeyCode.Return) && m_lockButton.activeSelf) {
 			LockOptions ();
-		} else if (Input.GetKeyDown (KeyCode.Return) && !m_lockButton.activeSelf) {
+		} else if (Input.GetKeyDown (KeyCode.Return) && !m_lockButton.activeSelf && !Timer.singleton.IsRunning()) {
 			Timer.singleton.StartTimer ();
 		}
 	}
