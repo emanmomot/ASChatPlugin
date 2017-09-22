@@ -14,8 +14,8 @@ public class AddRemoveOption : MonoBehaviour {
 	public GameObject removeButton;
 	public RectTransform panelBorder, panelMain;
 
-	int randomColor;
-	int lastRandom = 0;
+	private int baseColorInd;
+	private int colorInd;
 
 	void Awake() {
 		singleton = this;
@@ -24,6 +24,7 @@ public class AddRemoveOption : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		removeButton.SetActive (false);
+		baseColorInd = Random.Range (0, col.Length);
 	}
 	
 	// Update is called once per frame
@@ -35,20 +36,17 @@ public class AddRemoveOption : MonoBehaviour {
 		GameObject newOption = GameObject.Instantiate (optionPrefab, optionsTransform, false) as GameObject;
 		OptionScript opScript = newOption.GetComponent<OptionScript> ();
 
-		randomColor = Random.Range (0, col.Length);
-
-		if (lastRandom == randomColor) {
-			while (lastRandom == randomColor) {
-				randomColor = Random.Range (0, col.Length);
-			}
-			lastRandom = randomColor;
-		} 
-		lastRandom = randomColor;
+		// assign random base color for new poll
+		if (OptionScript.optionList.Count == 0) {
+			baseColorInd = Random.Range (0, col.Length);
+			colorInd = 0;
+		}
 
 		panelBorder.sizeDelta = new Vector2 (panelBorder.sizeDelta.x, panelBorder.sizeDelta.y + 30);
 		panelMain.sizeDelta = new Vector2 (panelMain.sizeDelta.x, panelMain.sizeDelta.y + 30);
 
-		opScript.SetColor (col[randomColor]);
+		opScript.SetColor (col[(baseColorInd + colorInd) % col.Length]);
+		colorInd++;
 
 		addButtonTransform.SetAsLastSibling ();
 		if (OptionScript.optionList.Count > 0) {

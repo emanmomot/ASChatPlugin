@@ -1,4 +1,3 @@
-console.log("Background script");
 
 // index of AS tab
 var tabIndex;
@@ -47,7 +46,6 @@ chrome.extension.onMessage.addListener( function (request, sender, sendResponse)
                     sendResponse(response);
                 });
             } else {
-                console.log("Tab not open");
                 tabIndex = 0;
                 connectionStatus = 0;
                 statusMessage = "Tab not open.";

@@ -1,4 +1,3 @@
-console.log("Popup script");
 
 new function() {
 	var ws = null;
@@ -52,7 +51,6 @@ new function() {
 	}
 	
 	var onOpen = function() {
-		console.log('OPENED: ' + serverUrl.val());
 		
 		connectionStatus.text('Connected');
 		sendMessage.removeAttr('disabled');
@@ -60,7 +58,6 @@ new function() {
 	};
 	
 	var onClose = function(message) {
-		console.log('CLOSED: ' + serverUrl.val());
 
 		connectionStatus.text('Disconnected - ' + message);
 
@@ -108,7 +105,6 @@ new function() {
 			connectButton.click(function(e) {
 				close();
 				open();
-				console.log("okay, connecting");
 			});
 		
 			disconnectButton.click(function(e) {

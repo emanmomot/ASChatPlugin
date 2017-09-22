@@ -14,6 +14,8 @@ public class OptionScript : MonoBehaviour {
 	public Image barImage;
 	public InputField mainInputField;
 
+	private float percentage;
+
 	public string player;
 
 	public Button revealPlayerButton;
@@ -37,16 +39,28 @@ public class OptionScript : MonoBehaviour {
 			PollHeader.singleton.inputField.navigation = customNav;
 		}
 	}
-	
+		
 	// Update is called once per frame
 	void Update () {
 		secondaryTextField.text = mainInputField.text;
-
 	}
 
-	public void SetBarPercentage(float percentage) {
-		bar.sizeDelta = new Vector2 (percentage * maxWidth, bar.sizeDelta.y);
-		percentageText.text = ((int)(percentage * 100)).ToString()+ "%";
+	public void SetBarPercentage(float newPercentage) {
+		iTween.ValueTo (gameObject, iTween.Hash ("from", percentage, "to", newPercentage, 
+			"time", 1.0f, "easetype", iTween.EaseType.easeOutQuad, "onupdatetarget", gameObject, "onupdate", "TweenText"));
+		float newWidth =(newPercentage/ ((PollMaster)MessageReciever.singleton).topPercentage) * maxWidth; 
+		iTween.ValueTo (gameObject, iTween.Hash ("from", bar.sizeDelta.x, "to",newWidth, 
+			"time", 1.0f, "easetype", iTween.EaseType.easeOutQuad, "onupdatetarget", gameObject, "onupdate", "TweenBar"));
+	}
+
+	void TweenBar(float newVal) {
+		bar.sizeDelta = new Vector2 (newVal, bar.sizeDelta.y);
+		//bar.sizeDelta = new Vector2 (maxWidth, bar.sizeDelta.y);
+	}
+
+	void TweenText(float newVal){
+		percentage = newVal;
+		percentageText.text = ((int)(newVal * 100)).ToString () + "%";
 	}
 
 	public void LockInOption() {

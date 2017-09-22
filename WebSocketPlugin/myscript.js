@@ -1,4 +1,3 @@
-console.log("hello this is my script!! :)");
 
 var ws;
 
@@ -31,15 +30,11 @@ var observer = new MutationObserver(function(mutations) {
 			}
 		}
 
-		console.log(message);
-		
 		
 		// ws exists and is OPEN
 		if (ws != null && ws.readyState == 1) {
-			console.log(username + ": " + message);
 			ws.send(JSON.stringify({ username: username, text: message }));
 		} else if(ws != null && ws.readyState != 1) {
-			console.log(username + ": " + message + " ws NOT READY");
 		}
 	}    
 });
@@ -60,7 +55,6 @@ window.addEventListener("beforeunload", function (e) {
 chrome.runtime.onMessage.addListener (
   function(request, sender, sendResponse) {
     if (request.type == "OpenMe") {
-    	console.log("Creating WebSocket.");
     	ws = new WebSocket(request.url);
 		ws.onopen = function() {
 			sendResponse({ success: true });
@@ -86,7 +80,6 @@ chrome.runtime.onMessage.addListener (
 		// async callback
 		return true;
     } else if (request.type == "CloseReq") {
-    	console.log("Closing WebSocket.");
     	if (ws) {
     		ws.close();
     		onClose({ reason: "Connection closed by user." });
@@ -95,7 +88,6 @@ chrome.runtime.onMessage.addListener (
 });
 
 function onClose(event) {
-	console.log("WS closed callback");
 	if (event.reason) {
 		chrome.extension.sendMessage({ type: "OnClose", message: event.reason });
 	} else {
